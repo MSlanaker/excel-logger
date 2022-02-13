@@ -1,8 +1,13 @@
 from openpyxl import Workbook, load_workbook
 from datetime import datetime
 import os
+import logging
 
-file_name = "expedia_report_monthly_january_2018.xlsx"
+logging.basicConfig(filename="value_log.log", level=logging.INFO,
+                    format="%(message)s")
+
+file_name = input(
+    "Please enter the name of the file you would like to search:")
 
 wb = load_workbook(file_name)
 ws = wb.worksheets[0]
@@ -45,3 +50,11 @@ dsat = row_data[4] * 100
 csat = row_data[5] * 100
 
 print(month_converted, calls_offered, abandon_after_30, fcr, dsat, csat)
+
+# Log the info to the value_log.log file
+logging.info("Date: " + month_converted)
+logging.info("Calls Offered: " + str(calls_offered))
+logging.info("Abandon After 30: " + str(abandon_after_30) + "%")
+logging.info("FCR: " + str(fcr) + "%")
+logging.info("DSAT: " + str(dsat) + "%")
+logging.info("CSAT: " + str(csat) + "%")
