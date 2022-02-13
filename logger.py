@@ -34,3 +34,14 @@ for row in worksheet_rows_1st_sheet:
     if row[0] == formatted_date:
         row_data = [row for row in row if row != None]
         print(row_data)
+
+# Take the raw values and convert them into more readable values for the log
+# Convert the date to a readable string and turn the decimals back to percentages
+month_converted = row_data[0].strftime("%B %Y")
+calls_offered = row_data[1]
+abandon_after_30 = row_data[2] * 100
+fcr = row_data[3] * 100
+dsat = row_data[4] * 100
+csat = row_data[5] * 100
+
+print(month_converted, calls_offered, abandon_after_30, fcr, dsat, csat)
