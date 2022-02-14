@@ -27,7 +27,7 @@ file_name_lst = (os.path.splitext(file_name)[0].split("_"))
 convert_string = " ".join([str(item) for item in file_name_lst])
 
 # Isolate the part of the string that has the month and year
-month_year_string = convert_string[23:]
+month_year_string = convert_string[23:].capitalize()
 
 # Conver the month and year to the same format as the date value on the sheet
 formatted_date = datetime.strptime(month_year_string, "%B %Y")
@@ -39,23 +39,28 @@ worksheet_rows = list(ws.iter_rows(values_only=True))
 # For loop to go through each row and compare the date value to the value pulled from the file name
 # If those values match, then it prints the cell values as a list
 for row in worksheet_rows:
-    if row[0] == formatted_date:
+    if type(row[0]) == type(formatted_date):
         row_data = [row for row in row if row != None]
-        print("Finding your information.")
+        if type(row_data[0]) == type(formatted_date):
+            date = row_data[0].strftime("%B %Y")
+            date_list = (date, row_data)
 
-# Take the raw values and convert them into more readable values for the log
-# Convert the date to a readable string and turn the decimals back to percentages
-month_converted = row_data[0].strftime("%B %Y")
-calls_offered = row_data[1]
-abandon_after_30 = row_data[2] * 100
-fcr = row_data[3] * 100
-dsat = row_data[4] * 100
-csat = row_data[5] * 100
+            if date_list[0] == month_year_string:
 
-# Log the info to the value_log.log file
-logging.info("Month: " + month_converted)
-logging.info("Calls Offered: " + str(calls_offered))
-logging.info("Abandon After 30: " + str(abandon_after_30) + "%")
-logging.info("FCR: " + str(fcr) + "%")
-logging.info("DSAT: " + str(dsat) + "%")
-logging.info("CSAT: " + str(csat) + "%")
+                # Take the raw values and convert them into more readable values for the log
+                # Convert the date to a readable string and turn the decimals back to percentages
+                month_converted = date_list[0]
+                calls_offered = date_list[1][1]
+                abandon_after_30 = date_list[1][2] * 100
+                fcr = date_list[1][3] * 100
+                dsat = date_list[1][4] * 100
+                csat = date_list[1][5] * 100
+
+                # Log the info to the value_log.log file
+                logging.info("Month: " + month_converted)
+                logging.info("Calls Offered: " + str(calls_offered))
+                logging.info("Abandon After 30: " +
+                             str(abandon_after_30) + "%")
+                logging.info("FCR: " + str(fcr) + "%")
+                logging.info("DSAT: " + str(dsat) + "%")
+                logging.info("CSAT: " + str(csat) + "%")
