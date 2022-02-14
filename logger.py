@@ -32,19 +32,23 @@ month_year_string = convert_string[23:].capitalize()
 # Conver the month and year to the same format as the date value on the sheet
 formatted_date = datetime.strptime(month_year_string, "%B %Y")
 
-
+# Iterates through the rows using the built in method
 worksheet_rows = list(ws.iter_rows(values_only=True))
 
 
-# For loop to go through each row and compare the date value to the value pulled from the file name
-# If those values match, then it prints the cell values as a list
+# For loop to go through each row and the data type to the formatted month and year
+# Checking if the item in position [0] is a datetime object, if so grab that row and append it to a new list
 for row in worksheet_rows:
     if type(row[0]) == type(formatted_date):
         row_data = [row for row in row if row != None]
+
+        # If the fist item in the list is a datetime object it then converts it to a string
+        # Then creates a new, nested list with the date string as the first item
         if type(row_data[0]) == type(formatted_date):
             date = row_data[0].strftime("%B %Y")
             date_list = (date, row_data)
 
+            # If the the date string matches the date string from the file name
             if date_list[0] == month_year_string:
 
                 # Take the raw values and convert them into more readable values for the log
@@ -57,6 +61,7 @@ for row in worksheet_rows:
                 csat = date_list[1][5] * 100
 
                 # Log the info to the value_log.log file
+                logging.info("----Information----")
                 logging.info("Month: " + month_converted)
                 logging.info("Calls Offered: " + str(calls_offered))
                 logging.info("Abandon After 30: " +
