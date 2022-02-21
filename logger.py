@@ -9,6 +9,7 @@ import log_functions
 logging.basicConfig(filename="value_log.log", level=logging.INFO,
                     format="%(message)s")
 
+# Declaring some pathing variables for file location manipulation #####################
 file_path = 'C:\\Users\\Owner\\OneDrive\\Desktop\\excel-logger\\Call Spreadsheets\\'
 arc_path = 'C:\\Users\\Owner\\OneDrive\\Desktop\\excel-logger\\Archive\\'
 err_path = 'C:\\Users\\Owner\\OneDrive\\Desktop\\excel-logger\\Error\\'
@@ -28,9 +29,10 @@ def get_error_files(path):
 
 bad_files = get_error_files(file_path)
 
+# Moving any errored files into the error folder #########################################################
 print("These file(s) could not be processed and are being moved to the 'Error' folder:", bad_files)
 
-# Moving any errored files into the error folder #########################################################
+
 source = file_path
 destination = err_path
 
@@ -50,11 +52,13 @@ def get_files(path):
 
 files = get_files(file_path)
 
+# Calling the logging functions from our log_functions module ###########################################
+
 log_functions.log_first_sheet_info(files)
 
 log_functions.log_second_sheet_info(files)
 
-
+# Taking the processed files and moving them to the archive folder ##################################################
 source = file_path
 destination = arc_path
 

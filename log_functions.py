@@ -13,6 +13,8 @@ err_path = 'C:\\Users\\Owner\\OneDrive\\Desktop\\excel-logger\\Error\\'
 source = file_path
 destination = err_path
 
+# Function for opening the first worksheet and loggin the needed info #################################################################
+
 
 def log_first_sheet_info(file_list):
     logging.basicConfig(filename="value_log.log", level=logging.INFO,
@@ -78,6 +80,7 @@ def log_first_sheet_info(file_list):
                         logging.info("CSAT: " + str(csat) + "%")
 
 
+# Function for moving to the second worksheet and logging the needed values ####################################################################
 def log_second_sheet_info(file_list):
     logging.basicConfig(filename="value_2.log", level=logging.INFO,
                         format="%(message)s")
